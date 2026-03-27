@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon --env-file=.env server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/JorgeRayne/crispy-curios#readme",
   "description": "",
   "dependencies": {
+    "dotenv": "^17.3.1",
     "nodemon": "^3.1.14"
   }
 }

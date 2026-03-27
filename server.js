@@ -1,18 +1,25 @@
-import http from 'http'
-import getPost from './postController.js'
+import http from 'http';
+import fs from 'fs/promises';
+import url  from 'url';
+import getPost from './postController.js';
+import path from 'path';
 
-const port = process.env.PORT || 8000
+const __fileName = url.fileURLToPath(import.meta.filename);
+const __dirName = path.dirname(__fileName)
 
+const port = process.env.PORT
 const server = http.createServer((req, res) => {
-    if(req.url === '/') {
-        res.writeHead(200, {'Content-Type' : 'text/html'})
-        res.end('<h1>Home Page</h1>')
-    } else if(req.url === '/about') {
-        res.writeHead(200, {'Content-Type' : 'text/html'})
-        res.end('<h1>About</h1>')
-    } else {
-        res.writeHead(500, {'Content-Type' : 'text/html'})
-        res.end('<h1>Page not found</h1>')
+    try {
+        let filePath;
+        if(req.url === '/') {
+            filePath = path.join(__dirname, 'public', 'index.html')
+        } else if(req.url === '/about') {
+            filePath = path.join(__dirname, 'public', 'about.html')
+        } else {
+            throw new Error('File not Found')
+        }
+    } catch (error) {
+        throw new Error('Server Error')
     }
 })
 
