@@ -4,11 +4,11 @@ import url  from 'url';
 import getPost from './postController.js';
 import path from 'path';
 
-const __fileName = url.fileURLToPath(import.meta.filename);
-const __dirName = path.dirname(__fileName)
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename)
 
 const port = process.env.PORT
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     try {
         let filePath;
         if(req.url === '/') {
@@ -18,8 +18,14 @@ const server = http.createServer((req, res) => {
         } else {
             throw new Error('File not Found')
         }
+        const data = await fs.readFile(filePath)
+        console.log(data)
+        res.setHeader('Content-Type', 'text/html');
+        res.write(data);
+        res.end()
     } catch (error) {
-        throw new Error('Server Error')
+        res.setHeader('Content-Type', 'text/html')
+        res.end('<h1>Server Error</h1>')
     }
 })
 
