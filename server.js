@@ -1,4 +1,5 @@
 import http from 'http'
+import getPost from './postController.js'
 
 const port = process.env.PORT || 8000
 
